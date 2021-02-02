@@ -1,0 +1,91 @@
+﻿@model Prescriptions.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="alert-success container-fluid">
+    <h2> Filter Data</h2>
+    <form asp-action="Index" method="post">
+        <div class=" ">
+            
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(ww => ww.DoctorID, htmlAttributes: new { @class = "" })
+                        @Html.DropDownListFor(ww => ww.DoctorID, Model.DoctorList, "select Doctor", htmlAttributes: new { @class = " Auto form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3  col-6 ">
+                    <div class="form-group">
+                        @Html.LabelFor(ww => ww.PationData, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(w => w.PationData, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(ww => ww.DateFrom, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(w => w.DateFrom, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(ww => ww.DateTO, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(w => w.DateTO, new { htmlAttributes = new { @class = " datepicker form-control" } })
+                    </div>
+                </div>
+
+                <div class="col-md-1 col-12  text-center mt-4">
+                    <input type="submit" value="Search" class="btn btn-info ">
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<br />
+<div id="myDiv">
+    <table class="table table-hover table-bordered table-responsive-xl ">
+        <tr>
+            <th>Doctor name</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Pation Name</th>
+            <th>Pation phone</th>
+        </tr>
+        @foreach (var item in Model.RX)
+        {
+            <tr onclick="location.href = '@(Url.Action("GetRxDetail", "Home", new { ID = item.ID}))'">
+                <td>@item.Doctor.Name</td>
+                <td>@Html.DisplayFor(w => item.DateFrom)</td>
+                <td>@Html.DisplayFor(w => item.DateTo)</td>
+                <td>@Html.DisplayFor(w => item.Pation.Name)</td>
+                <td>@Html.DisplayFor(w => item.Pation.Phone)</td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+@section scripts
+    {
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+       
+        $(document).ready(function () {
+            $('.Auto').select2();
+        });
+        $(function () {
+            $(".datepicker").datepicker();
+
+        });
+
+
+
+    </script>
+}

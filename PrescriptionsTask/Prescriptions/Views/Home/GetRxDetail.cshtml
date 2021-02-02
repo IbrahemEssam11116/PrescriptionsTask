@@ -1,0 +1,73 @@
+﻿@model Prescriptions.Models.RX
+@{
+    ViewBag.Title = "GetRxDetail";
+}
+
+<div id="DivPrintd" class="card">
+    <div class="card-head">
+        <div class="row mt-2 p-2">
+            <div class="col-6">
+                <h3 class="card-head text-info">
+                    Doctor : @Model.Doctor.Name
+
+                </h3>
+            </div>
+            <div class="col-6">
+                <h3 class="card-head text-info">Specialty : @Model.Doctor.Specialty</h3>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-bordered ">
+            <tr>
+                <th> <h2>Medicin Name</h2></th>
+                <th><h2>Does</h2> </th>
+
+            </tr>
+            @foreach (var item in Model.RxDetails)
+            {
+                <tr>
+                    <td><h3>@item.MedicineName</h3> </td>
+                    <td> <h3>@item.Does</h3> </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="card-footer">
+        <h4>Clinic Data</h4>
+        <div class="row mt-2 p-2">
+            <div class="col-6">
+                <h4 class="card-head ">
+                    Address : @Model.Clinic.Address
+
+                </h4>
+            </div>
+            <div class="col-6">
+                <h4 class="card-head ">Mobile : @Model.Clinic.Mobile</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <button class="btn btn-info" onclick="print()"> Print</button>
+</div>
+@section scripts
+    {
+    <script>
+        function print() {
+            var divContents = document.getElementById("DivPrintd").innerHTML;
+            var a = window.open('', '', 'height=500, width=500');
+            a.document.write('<html>');
+            
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+    </script>
+    }
